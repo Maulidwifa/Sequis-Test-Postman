@@ -1,0 +1,954 @@
+{
+	"info": {
+		"_postman_id": "40117e32-e783-4b6f-a1a6-bb038e7ac7c6",
+		"name": "Sequis-Test",
+		"description": "For a social network application, friendship management is a common feature. The application will need features like friend request, approve or reject friend request, list friend requests, list friends, block friend, common friend between user.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24817059"
+	},
+	"item": [
+		{
+			"name": "friends",
+			"item": [
+				{
+					"name": "list",
+					"item": [
+						{
+							"name": "List friend.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+											"});\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+											"});\r",
+											"var abc = pm.response.json()\r",
+											"pm.test(\"Check Friends 1\", function(){\r",
+											"    console.log(abc.friends[0])\r",
+											"    pm.expect(abc.friends[0]).to.eql(\"test@mail.com\")\r",
+											"})\r",
+											"pm.test(\"Check Friends 2\", function(){\r",
+											"    console.log(abc.friends[1])\r",
+											"    pm.expect(abc.friends[1]).to.eql(\"testing@mail.com\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test2@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://13.229.247.215/api/v1/friend/list",
+									"protocol": "http",
+									"host": [
+										"13",
+										"229",
+										"247",
+										"215"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"list"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/friend/list",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"friend",
+												"list"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"friends\": [\n    \"amet occaecat Duis\",\n    \"mollit nostrud aliqua reprehenderit\"\n  ]\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/friend/list",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"friend",
+												"list"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+								}
+							]
+						},
+						{
+							"name": "List common friend between users.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+											"});\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+											"});\r",
+											"var abc = pm.response.json()\r",
+											"pm.test(\"Check Success\", function(){\r",
+											"    console.log(abc.success)\r",
+											"    pm.expect(abc.success).to.eql(true)\r",
+											"})\r",
+											"pm.test(\"Check the Number of Friends\", function(){\r",
+											"    console.log(abc.count)\r",
+											"    pm.expect(abc.count).to.eql(2)\r",
+											"})\r",
+											"pm.test(\"Check Friends 1\", function(){\r",
+											"    console.log(abc.friends.friends[0])\r",
+											"    pm.expect(abc.friends.friends[0]).to.eql(\"fairuz@mail.com\")\r",
+											"})\r",
+											"pm.test(\"Check Friends 2\", function(){\r",
+											"    console.log(abc.friends.friends[1])\r",
+											"    pm.expect(abc.friends.friends[1]).to.eql(\"test2@mail.com\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"friends\": [\n    \"maulid@mail.com\",\n    \"testing@mail.com\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://13.229.247.215/api/v1/friend/list/common",
+									"protocol": "http",
+									"host": [
+										"13",
+										"229",
+										"247",
+										"215"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"list",
+										"common"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"friends\": [\n    \"fugiat\",\n    \"nisi\"\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/friend/list/common",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"friend",
+												"list",
+												"common"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"count\": 68511067,\n  \"friends\": {\n    \"friends\": [\n      \"nostrud in aliquip dol\",\n      \"occaecat in dolor\"\n    ]\n  },\n  \"success\": true\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"friends\": [\n    \"fugiat\",\n    \"nisi\"\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/friend/list/common",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"friend",
+												"list",
+												"common"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+								}
+							]
+						},
+						{
+							"name": "List friend request.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+											"});\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+											"});\r",
+											"var abc = pm.response.json()\r",
+											"pm.test(\"Check Request 1\", function(){\r",
+											"    console.log(abc.requests[0].requestator)\r",
+											"    pm.expect(abc.requests[0].requestator).to.eql(\"test@mail.com\")\r",
+											"})\r",
+											"pm.test(\"Check Status 1\", function(){\r",
+											"    console.log(abc.requests[0].status)\r",
+											"    pm.expect(abc.requests[0].status).to.eql(\"accepted\")\r",
+											"})\r",
+											"pm.test(\"Check Request 2\", function(){\r",
+											"    console.log(abc.requests[1].requestator)\r",
+											"    pm.expect(abc.requests[1].requestator).to.eql(\"testing@mail.com\")\r",
+											"})\r",
+											"pm.test(\"Check Status 2\", function(){\r",
+											"    console.log(abc.requests[1].status)\r",
+											"    pm.expect(abc.requests[1].status).to.eql(\"accepted\")\r",
+											"})\r",
+											"pm.test(\"Check Request 3\", function(){\r",
+											"    console.log(abc.requests[2].requestator)\r",
+											"    pm.expect(abc.requests[2].requestator).to.eql(\"testmail@mail.com\")\r",
+											"})\r",
+											"pm.test(\"Check Status 3\", function(){\r",
+											"    console.log(abc.requests[2].status)\r",
+											"    pm.expect(abc.requests[2].status).to.eql(\"pending\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test2@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://13.229.247.215/api/v1/friend/list/request",
+									"protocol": "http",
+									"host": [
+										"13",
+										"229",
+										"247",
+										"215"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"list",
+										"request"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/friend/list/request",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"friend",
+												"list",
+												"request"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"requests\": [\n    {\n      \"requestator\": \"dolore velit in dolor\",\n      \"status\": \"dolor culpa cupidatat\"\n    },\n    {\n      \"requestator\": \"consequat reprehenderit in quis\",\n      \"status\": \"cupidatat Excepteur exercitation velit\"\n    }\n  ]\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/friend/list/request",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"friend",
+												"list",
+												"request"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Request a friend.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestor\": \"maulid@mail.com\",\n  \"to\": \"testing@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://13.229.247.215/api/v1/friend/request",
+							"protocol": "http",
+							"host": [
+								"13",
+								"229",
+								"247",
+								"215"
+							],
+							"path": [
+								"api",
+								"v1",
+								"friend",
+								"request"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/request",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/request",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"request"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Approve friend request.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"requestor\": \"maulid@mail.com\",\n    \"to\": \"fairuz@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://13.229.247.215/api/v1/friend/approve",
+							"protocol": "http",
+							"host": [
+								"13",
+								"229",
+								"247",
+								"215"
+							],
+							"path": [
+								"api",
+								"v1",
+								"friend",
+								"approve"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/approve",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"approve"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/approve",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"approve"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Reject friend request.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestor\": \"test2@mail.com\",\n  \"to\": \"test1@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://13.229.247.215/api/v1/friend/reject",
+							"protocol": "http",
+							"host": [
+								"13",
+								"229",
+								"247",
+								"215"
+							],
+							"path": [
+								"api",
+								"v1",
+								"friend",
+								"reject"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/reject",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"reject"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/reject",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"reject"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Block a friend.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(50000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestor\": \"mauld@mail.com\",\n  \"to\": \"dafi@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://13.229.247.215/api/v1/friend/block",
+							"protocol": "http",
+							"host": [
+								"13",
+								"229",
+								"247",
+								"215"
+							],
+							"path": [
+								"api",
+								"v1",
+								"friend",
+								"block"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/block",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"block"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/friend/block",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"friend",
+										"block"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"errors\": {},\n  \"message\": \"Failed to process request\",\n  \"success\": false\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
